@@ -1,149 +1,49 @@
-# TrenStar Elevator Simulation — TEAMX Elevator Challenge
+ TrenStarElevator System
 
-A real-time, multi-elevator dispatch simulation console application for a large building,
-built in C# / .NET 8 following Clean Architecture and SOLID principles.
+A robust, modular simulation of a building elevator management system using C#, structured with Domain-Driven Design (DDD) principles.
 
-## Overview
+ Project Overview
 
-The application models a building's central computer coordinating several elevator cars of
-different types (standard passenger, high-speed, glass/panoramic and freight). Users interact
-through the console to call an elevator to a floor and specify how many passengers are waiting;
-the central computer dispatches the nearest suitable car, and every elevator moves independently
-and concurrently in real time, respecting passenger capacity limits.
+The TrenStarElevator project models a sophisticated building environment with multiple elevator shafts. It manages passenger requests, handles movement, simulates load, and outputs status updates. It is designed to be extensible, allowing for different types of elevators and dispatch strategies.
 
-## Features
+ Architecture
 
-- **Real-time elevator status** — current floor, direction, motion/idle state and passenger load
-  for every car, refreshed live.
-- **Interactive elevator control** — call a car to a floor, specify passenger count and
-  destination from the console.
-- **Multiple floors and elevators** — configurable building floor range and any number of cars.
-- **Efficient dispatching** — a direction-aware "nearest car" algorithm (an elevator already
-  sweeping towards a request is preferred over sending a farther idle car).
-- **Passenger limit handling** — capacity is enforced per car; requests that can't currently be
-  serviced are queued and automatically retried as capacity frees up.
-- **Multiple elevator types** — `PassengerElevator`, `HighSpeedElevator`, `GlassElevator` and
-  `FreightElevator`, each with different speed/capacity/door-timing characteristics, all sharing
-  one base implementation and pluggable into the system via a common abstraction.
-- **Real-time operation** — every elevator runs on its own asynchronous loop, so cars move and
-  respond independently and concurrently, just like a real building's control system.
+The solution follows a clean architecture pattern:
 
-## Architecture
+src/TrenStarElevator.Domain`: The core of the system. Contains fundamental business rules, entities (`Building`, `PassengerRequest`), value objects, enums, interfaces, and the base logic for all elevators (`ElevatorBase`). It has no external dependencies.
+`src/TrenStarElevator.Application`: Coordinates the domain logic to fulfill system use cases. Contains interfaces for application services, the primary control logic (`ElevatorControlSystem`), the simulation orchestration (`ElevatorSimulationEngine`), and dispatch algorithms.
+`src/TrenStarElevator.Infrastructure`: Implementation details that support the system but are not part of the core domain. Currently handles logging mechanisms (Console, File).
+`src/TrenStarElevator.ConsoleApp`: The user interface layer. A simple command-line interface to visualize the state of the building and its elevators.
+`tests/TrenStarElevator.Tests`: Automated test suite for validating the logic across different layers.
 
-The solution follows a Clean Architecture layering, with dependencies pointing inwards:
+Key Components
 
-```
-TrenStarElevator.ConsoleApp        (Presentation / composition root)
-        │
-        ▼
-TrenStarElevator.Infrastructure    (Logging sinks: console, file)
-        │
-        ▼
-TrenStarElevator.Application       (Use cases: dispatch strategy, control system, simulation loop)
-        │
-        ▼
-TrenStarElevator.Domain            (Entities, enums, exceptions, elevator behaviour - no dependencies)
-```
+`ElevatorControlSystem`: The main brain that accepts requests, uses a strategy to assign them, and responds to elevator events.
+`IElevatorDispatchStrategy`: An interface allowing different algorithms for picking the best elevator for a request.
+`ElevatorBase`: A robust base class implementing core physics, capacity handling, and event raising.
 
-- **Domain** — `IElevator` and its segregated sub-interfaces (`IElevatorStatus`,
-  `IElevatorMovement`, `IElevatorPassengerHandling`, `IElevatorEventSource`), the `ElevatorBase`
-  abstract class implementing shared movement/capacity logic, the four concrete elevator types,
-  `Building`, `Floor`, `PassengerRequest`, and the domain exceptions. Has no dependency on any
-  other project.
-- **Application** — `IElevatorDispatchStrategy` abstraction and its `NearestElevatorDispatchStrategy`
-  implementation, `ElevatorControlSystem` (the building's "central computer"), and
-  `ElevatorSimulationEngine`, which drives the real-time per-elevator loops. Depends only on Domain.
-- **Infrastructure** — `IElevatorLogger` implementations (`ConsoleElevatorLogger`,
-  `FileElevatorLogger`, `CompositeElevatorLogger`) and an adapter bridging Domain elevator events
-  onto the logger abstraction. Depends on Application/Domain, never the other way round.
-- **ConsoleApp** — composition root (`Program.cs`) wiring everything together, plus the console
-  menu and live status board renderer. Depends on all three layers below it.
+Getting Started
 
-### SOLID
+Prerequisites
 
-- **SRP** — dispatching (`NearestElevatorDispatchStrategy`), coordination (`ElevatorControlSystem`),
-  movement simulation (`ElevatorBase`) and presentation (`ConsoleDisplayService`) are all separate
-  classes with one reason to change each.
-- **OCP** — new elevator types are added by deriving from `ElevatorBase` (see `HighSpeedElevator`,
-  `GlassElevator`, `FreightElevator`); new dispatch algorithms are added by implementing
-  `IElevatorDispatchStrategy`; new logging sinks by implementing `IElevatorLogger` — none of this
-  requires modifying existing classes.
-- **LSP** — every elevator type can be used anywhere an `IElevator` is expected; the control
-  system and dispatch strategy never check for a concrete type.
-- **ISP** — `IElevator` is composed from four narrow interfaces so that, for example, the
-  console status board depends only on `IElevatorStatus`, not the full movement/passenger API.
-- **DIP** — `ElevatorControlSystem` and `ElevatorSimulationEngine` depend only on `IElevator`,
-  `IElevatorDispatchStrategy` and `IElevatorLogger` abstractions, never on concrete elevator,
-  strategy or logging classes.
+.NET 8.0 SDK or later
 
-## Dispatch algorithm
+Building and Running
 
-`NearestElevatorDispatchStrategy` scores each elevator with spare capacity by
-`EstimatedFloorsToReach`, which accounts for the car's current direction and its pending stop
-queue (a SCAN/"elevator algorithm" style sweep) rather than simple absolute distance, so a car
-already heading the right way is preferred over sending a nearer-but-wrong-direction car past the
-caller. Requests that cannot be serviced immediately (e.g. every car is full) are queued and
-retried automatically once a second by the simulation engine.
+1.  Open a terminal in the root directory (`TrenStarElevator/`).
+2.  Build the solution:
+    bash
+    dotnet build
+    
+3.  Run the Console application:
+    bash
+    dotnet run --project src/TrenStarElevator.ConsoleApp
+    
 
-## Getting started
+Running Tests
 
-### Prerequisites
-
-- [.NET 8 SDK](https://dotnet.microsoft.com/download/dotnet/8.0)
-
-### Build
-
-```bash
-dotnet build
-```
-
-### Run
-
-```bash
-dotnet run --project src/TrenStarElevator.ConsoleApp
-```
-
-### Test
-
-```bash
-dotnet test
-```
-
-## Using the application
-
-On launch, the menu offers:
-
-1. **Call an elevator** — enter the floor passengers are waiting on, their destination floor,
-   and how many passengers are waiting. The central computer dispatches the best available car.
-2. **Watch live status board** — an auto-refreshing view of every elevator's floor, direction,
-   state, passenger load and pending stops; press any key to return to the menu.
-3. **Show status snapshot** — a single, non-refreshing view of current elevator status.
-4. **Exit** — stops the simulation and closes the application.
-
-Elevator activity (arrivals, boarding, dispatch decisions, warnings) is logged to the console and
-appended to `logs/elevator-simulation.log` next to the executable.
-
-## Project layout
-
-```
-TrenStarElevator/
-├── src/
-│   ├── TrenStarElevator.Domain/
-│   ├── TrenStarElevator.Application/
-│   ├── TrenStarElevator.Infrastructure/
-│   └── TrenStarElevator.ConsoleApp/
-├── tests/
-│   └── TrenStarElevator.Tests/
-├── TrenStarElevator.sln
-└── README.md
-```
-
-## Known limitations / possible extensions
-
-- The building configuration (floor range, number and type of elevators) is currently defined in
-  `Program.BuildDefaultBuilding()`; externalising this to a config file would be a natural next step.
-- Elevators are dispatched per-request rather than batched; a destination-dispatch panel (where
-  passengers select their destination before entering, rather than a simple up/down hall call)
-  could be layered on top of the existing `PassengerRequest` model without changing the Domain.
-- `TakeOutOfService` / `ReturnToService` exist on every elevator to support maintenance scenarios
-  and are exercised in the test suite, but are not yet wired into the console menu.
+1.  Open a terminal in the root directory.
+2.  Run all tests:
+    bash
+    dotnet test
+    
