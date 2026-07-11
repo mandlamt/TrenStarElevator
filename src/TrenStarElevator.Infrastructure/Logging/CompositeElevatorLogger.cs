@@ -4,7 +4,7 @@ namespace TrenStarElevator.Infrastructure.Logging;
 
 /// <summary>
 /// Combines several <see cref="IElevatorLogger"/> implementations behind a single instance
-/// (e.g. console + file), so the Application layer can log once while Infrastructure decides
+/// for example console + file, so the Application layer can log once while Infrastructure decides
 /// how many, and which, sinks actually receive the message.
 /// </summary>
 public sealed class CompositeElevatorLogger : IElevatorLogger
