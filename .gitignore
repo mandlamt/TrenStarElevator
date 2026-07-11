@@ -1,48 +1,19 @@
-## .NET / Visual Studio / Rider .gitignore
+# .gitignore
+# Ignore build artifacts and user-specific settings for C#/.NET projects
 
-# Build results
-[Bb]in/
-[Oo]bj/
-[Dd]ebug/
-[Rr]elease/
-x64/
-x86/
-[Ll]og/
-[Ll]ogs/
+# Build directories
+bin/
+obj/
 
-# Visual Studio files
+# Visual Studio user-specific files
 .vs/
 *.user
-*.userosscache
 *.suo
-*.userprefs
+*.userosscache
+*.sln.docstates
 
-# Rider
+# Rider user-specific files
 .idea/
 
-# VS Code
-.vscode/
-
-# NuGet
-*.nupkg
-**/packages/*
-!**/packages/build/
-.nuget/
-
-# Test results
-[Tt]est[Rr]esult*/
-*.trx
-*.coverage
-*.coveragexml
-
-# Publish output
-publish/
-*.pubxml
-
-# OS files
-.DS_Store
-Thumbs.db
-
-# Environment / secrets
-*.env
-appsettings.*.local.json
+# Launch settings
+Properties/launchSettings.json
