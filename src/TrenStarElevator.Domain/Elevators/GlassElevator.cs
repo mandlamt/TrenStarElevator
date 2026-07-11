@@ -6,7 +6,7 @@ public sealed class GlassElevator : ElevatorBase
 {
     public override ElevatorType Type => ElevatorType.Glass;
 
-    // Holds doors open a bit longer to suit scenic/atrium boarding.
+    // Holds doors open a bit longer to suit boarding.
     protected override int DoorCycleTimeMs => 1600;
 
     public GlassElevator(string id, int minFloor, int maxFloor, int startingFloor = 0, int maxCapacity = 8)
@@ -16,6 +16,5 @@ public sealed class GlassElevator : ElevatorBase
 
     protected override void OnArrived(int floor)
     {
-        // Hook for atrium lighting or scenic display integrations; no-op for now.
     }
 }
