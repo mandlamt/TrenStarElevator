@@ -6,7 +6,7 @@ public sealed class HighSpeedElevator : ElevatorBase
 {
     public override ElevatorType Type => ElevatorType.HighSpeed;
 
-    // Faster car: shorter travel and door times than the standard passenger elevator.
+    // Faster: shorter travel and door times than the standard passenger elevator.
     protected override int FloorTravelTimeMs => 450;
     protected override int DoorCycleTimeMs => 900;
 
