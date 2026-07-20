@@ -1,7 +1,8 @@
 using TrenStarElevator.Domain.Enums;
 
 namespace TrenStarElevator.Domain.Elevators;
-
+/*This means adding a new type = just add new behavior class
+   - GlassElevatorBehavior (slow, high visibility) */
 public sealed class GlassElevator : ElevatorBase
 {
     public override ElevatorType Type => ElevatorType.Glass;
