@@ -4,7 +4,12 @@ using TrenStarElevator.Domain.Exceptions;
 using TrenStarElevator.Domain.Interfaces;
 
 namespace TrenStarElevator.Domain.Elevators;
+/*This class does X, it follows SRP because Y”
+Domain
 
+Contains:Elevator entity,Floor information,Business rules
+Domain models,No external dependencies.
+*/
 public abstract class ElevatorBase : IElevator
 {
     private readonly int _minFloor;
