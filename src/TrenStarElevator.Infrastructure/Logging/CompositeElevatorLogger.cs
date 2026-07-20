@@ -1,7 +1,9 @@
 using TrenStarElevator.Application.Interfaces;
 
 namespace TrenStarElevator.Infrastructure.Logging;
+/*. Contains:Logging,Database implementations,External services,File access,Future SQL repositories
 
+Implements interfaces defined by Application.*/
 /// <summary>
 /// Combines several <see cref="IElevatorLogger"/> implementations behind a single instance
 /// for example console + file, so the Application layer can log once while Infrastructure decides
