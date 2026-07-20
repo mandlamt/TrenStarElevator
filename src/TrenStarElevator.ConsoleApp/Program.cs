@@ -9,7 +9,10 @@ using TrenStarElevator.Infrastructure.Logging;
 namespace TrenStarElevator.ConsoleApp;
 /*.Presentation
 
-Contains:Console UI,Input validation,Display logic,It simply calls Application services.  */
+Contains:Console UI,Input validation,Display logic,It simply calls Application services.  
+SOLID SRP:ConsoleManager: Only handles UI
+
+*/
 internal static class Program
 {
     private static async Task Main()
