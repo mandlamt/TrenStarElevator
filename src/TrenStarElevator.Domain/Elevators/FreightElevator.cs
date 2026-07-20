@@ -1,7 +1,7 @@
 using TrenStarElevator.Domain.Enums;
 
 namespace TrenStarElevator.Domain.Elevators;
-
+/*.I used the Strategy pattern:Implemented different behaviors FreightElevatorBehavior (normal speed, capacity 2000kg)*/
 public sealed class FreightElevator : ElevatorBase
 {
     public override ElevatorType Type => ElevatorType.Freight;
