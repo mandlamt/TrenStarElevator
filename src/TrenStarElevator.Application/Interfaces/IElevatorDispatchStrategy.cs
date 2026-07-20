@@ -17,4 +17,6 @@ public interface IElevatorDispatchStrategy
 Contains:Use cases,Interfaces,Services,Business workflows,Dispatch strategies
 Coordinates business operations.
 
+SOLID SRP Dispatcher class: Only handles assigning elevators
+
 } */
