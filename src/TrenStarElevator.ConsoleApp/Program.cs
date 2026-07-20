@@ -7,7 +7,9 @@ using TrenStarElevator.Domain.Entities;
 using TrenStarElevator.Infrastructure.Logging;
 
 namespace TrenStarElevator.ConsoleApp;
+/*.Presentation
 
+Contains:Console UI,Input validation,Display logic,It simply calls Application services.  */
 internal static class Program
 {
     private static async Task Main()
