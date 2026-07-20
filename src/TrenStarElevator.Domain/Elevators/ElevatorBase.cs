@@ -11,6 +11,14 @@ Contains:Elevator entity,Floor information,Business rules
 Domain models,No external dependencies.
 
 SOLID SRP:Elevator class: Only handles movement, doors, passengers
+
+Strategy pattern:
+
+1. Created IElevatorBehavior interface
+   - Move()
+   - OpenDoors()
+   - CloseDoors()
+   - BoardPassengers()
 */
 public abstract class ElevatorBase : IElevator
 {
