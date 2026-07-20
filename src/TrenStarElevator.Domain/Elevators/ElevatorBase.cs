@@ -19,6 +19,8 @@ Strategy pattern:
    - OpenDoors()
    - CloseDoors()
    - BoardPassengers()
+
+   I used the Strategy pattern: The Elevator class composes the behavior
 */
 public abstract class ElevatorBase : IElevator
 {
