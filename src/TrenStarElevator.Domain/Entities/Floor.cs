@@ -1,5 +1,5 @@
 namespace TrenStarElevator.Domain.Entities;
-
+/*. SOLID Floor class: Only handles waiting passengers */
 public sealed class Floor : IEquatable<Floor>
 {
     public int Number { get; }
