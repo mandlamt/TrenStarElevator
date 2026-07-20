@@ -9,6 +9,8 @@ Domain
 
 Contains:Elevator entity,Floor information,Business rules
 Domain models,No external dependencies.
+
+SOLID SRP:Elevator class: Only handles movement, doors, passengers
 */
 public abstract class ElevatorBase : IElevator
 {
