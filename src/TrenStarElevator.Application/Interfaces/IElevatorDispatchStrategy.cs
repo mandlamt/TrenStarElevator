@@ -12,5 +12,9 @@ public interface IElevatorDispatchStrategy
    - Nearest elevator is assigned
    - Full elevators are not assigned
    - Different directions handled correctly
+   Application
+
+Contains:Use cases,Interfaces,Services,Business workflows,Dispatch strategies
+Coordinates business operations.
 
 } */
