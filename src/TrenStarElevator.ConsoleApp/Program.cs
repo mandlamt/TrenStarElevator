@@ -13,7 +13,7 @@ Contains:Console UI,Input validation,Display logic,It simply calls Application s
 SOLID SRP:ConsoleManager: Only handles UI
 
 I handled concurrency using: Async/await for movement simulation:
-   await Task.Delay(1000); // Simulate 1 second movement
+   await Task.Delay(250); // Simulate 1 second movement
 
 */
 internal static class Program
