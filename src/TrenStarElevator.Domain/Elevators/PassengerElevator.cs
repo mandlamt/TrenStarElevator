@@ -1,6 +1,9 @@
 using TrenStarElevator.Domain.Enums;
 
 namespace TrenStarElevator.Domain.Elevators;
+/*LSP (Liskov Substitution):
+- Any elevator type can replace the base Elevator class
+- All subclasses maintain base behavior*/
 
 public sealed class PassengerElevator : ElevatorBase
 {
