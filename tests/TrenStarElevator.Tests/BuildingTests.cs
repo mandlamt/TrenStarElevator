@@ -4,6 +4,26 @@ using TrenStarElevator.Tests.TestDoubles;
 using Xunit;
 
 namespace TrenStarElevator.Tests;
+/* unit tests:
+
+Tested:
+1. Elevator movement
+   - Move up from floor 0 to 5 → reaches floor 5
+   - Cannot move to invalid floor (> max floor)
+
+2. Dispatching
+   - Nearest elevator is assigned
+   - Full elevators are not assigned
+   - Different directions handled correctly
+
+3. Capacity
+   - Cannot exceed max passengers
+   - Request is queued if all elevators full
+
+4. Edge Cases
+   - No elevators available
+   - Invalid floor numbers
+   - Multiple simultaneous requests */
 
 public class BuildingTests
 {
