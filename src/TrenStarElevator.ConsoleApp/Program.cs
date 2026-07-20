@@ -12,6 +12,9 @@ namespace TrenStarElevator.ConsoleApp;
 Contains:Console UI,Input validation,Display logic,It simply calls Application services.  
 SOLID SRP:ConsoleManager: Only handles UI
 
+I handled concurrency using: Async/await for movement simulation:
+   await Task.Delay(1000); // Simulate 1 second movement
+
 */
 internal static class Program
 {
