@@ -4,7 +4,9 @@ using TrenStarElevator.Domain.Entities;
 using TrenStarElevator.Domain.Interfaces;
 
 namespace TrenStarElevator.Application.Services;
-
+/*. I handled concurrency using:Concurrent collections:
+   - ConcurrentQueue<Passenger> for waiting queues
+   - ConcurrentDictionary<int, Elevator> for elevator tracking */
 public sealed class ElevatorControlSystem
 {
     private sealed class AssignedLeg
